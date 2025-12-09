@@ -101,9 +101,12 @@ function sanitizeAlertData(data) {
         .substring(0, 200);      // Limit length to prevent overflow
     }
 
-    // Sanitize host field
-    if (sanitized.fields.host) {
+    // Sanitize host field - provide default if undefined
+    if (sanitized.fields.host === undefined || sanitized.fields.host === null) {
+      sanitized.fields.host = 'unknown';
+    } else {
       sanitized.fields.host = sanitized.fields.host
+        .toString()
         .replace(/"/g, "'")
         .replace(/\\/g, '')
         .substring(0, 50);
